@@ -5,6 +5,7 @@ import os
 from datetime import datetime
 import random
 from time import sleep
+#import emoji
 
 # Здесь нужно вставить токен, который дал BotFather при регистрации
 # Пример: token = '2007628239:AAEF4ZVqLiRKG7j49EC4vaRwXjJ6DN6xng8'
@@ -77,7 +78,7 @@ def reg(message):
     cur.execute("SELECT * FROM users WHERE user_id=?", (user_id,))
     existing_user = cur.fetchone()
     if existing_user:
-        bot.send_message(message.chat.id, 'Вы уже зарегистрированы.')
+        bot.send_message(message.chat.id, 'Вы уже зарегистрированы. 👌')
     else:
         bot.send_message(message.chat.id, 'Сейчас тебя зарегистрируем! Введите ваше имя', reply_markup=types.ReplyKeyboardRemove())
         bot.register_next_step_handler(message, user_name)
@@ -104,7 +105,7 @@ def user_pass(message):
     else:
         cur.execute("INSERT INTO users (name, pass, user_id) VALUES (?, ?, ?)", (name, password, user_id))
         conn.commit()
-    bot.send_message(message.chat.id, 'Вы успешно зарегистрированы.', reply_markup=buttons)
+    bot.send_message(message.chat.id, 'Вы успешно зарегистрированы. 🚀', reply_markup=buttons)
     cur.close()
     conn.close()
 
@@ -160,7 +161,7 @@ def participate_raffle(message):
         cur = conn.cursor()
         cur.execute("SELECT event_id FROM rozigr_users WHERE user_id=?", (user_id,))
         event_id = cur.fetchone()[0]
-        bot.send_message(message.chat.id, f'Вы уже участвуете в розыгрыше. Ваш уникальный ID для участия: {event_id}')
+        bot.send_message(message.chat.id, f'Вы уже участвуете в розыгрыше. 🤑\nВаш уникальный ID для участия: {event_id}')
         cur.close()
         conn.close()
     else:
@@ -172,7 +173,7 @@ def add_user_to_raffle(message):
     phone_number = message.text.strip()
     user_id = message.from_user.id
     event_id = add_user_to_db(user_id, phone_number)
-    bot.send_message(message.chat.id, f'Вы успешно зарегистрированы для участия в розыгрыше. Ваш уникальный ID для участия: {event_id}', reply_markup=buttons)
+    bot.send_message(message.chat.id, f'🎉Вы успешно зарегистрированы для участия в розыгрыше🎉.\nВаш уникальный ID для участия: {event_id}', reply_markup=buttons)
     
     
 
